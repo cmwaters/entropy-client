@@ -1,26 +1,26 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { POOLS_WITH_AIRDROP } from "./../models/airdrops";
-import { MINT_TO_MARKET } from "./../models/marketOverrides";
+import { POOLS_WITH_AIRDROP } from "../models/airdrops";
+import { MINT_TO_MARKET } from "../models/marketOverrides";
 import {
   convert,
   getPoolName,
   getTokenName,
   KnownTokenMap,
   STABLE_COINS,
-} from "./../utils/utils";
-import { useConnectionConfig } from "./../utils/connection";
+} from "../utils/utils";
+import { useConnectionConfig } from "../utils/connection";
 import {
   cache,
   getMultipleAccounts,
   MintParser,
   ParsedAccountBase,
   useCachedPool,
-} from "./../utils/accounts";
+} from "../utils/accounts";
 import { Market, MARKETS, Orderbook, TOKEN_MINTS } from "@project-serum/serum";
 import { AccountInfo, Connection, PublicKey } from "@solana/web3.js";
 import { useMemo } from "react";
 import { PoolInfo } from "../models";
-import { EventEmitter } from "./../utils/eventEmitter";
+import { EventEmitter } from "../utils/eventEmitter";
 import { LIQUIDITY_PROVIDER_FEE, SERUM_FEE } from "../utils/pools";
 
 interface RecentPoolData {
@@ -638,3 +638,4 @@ interface SerumMarket {
 
   midPrice?: (mint?: PublicKey) => number;
 }
+

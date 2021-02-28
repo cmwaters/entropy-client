@@ -6,7 +6,7 @@ import { PoolInfo } from "../../models";
 import { PoolIcon } from "../tokenIcon";
 import { formatShortDate, getPoolName } from "../../utils/utils";
 import { useConnectionConfig } from "../../utils/connection";
-import { BONFIDA_POOL_INTERVAL } from "../../context/market";
+import { BONFIDA_POOL_INTERVAL } from "../../contexts/market";
 
 export const VOLUME_API = "https://serum-api.bonfida.com/pools/volumes";
 export const LIQUIDITY_API = "https://serum-api.bonfida.com/pools/liquidity";

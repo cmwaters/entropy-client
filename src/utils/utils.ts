@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
 import { MintInfo } from "@solana/spl-token";
-
+import BN from "bn.js";
 import { PoolInfo, TokenAccount } from "./../models";
+import { WAD, ZERO } from "./math"
 
 export interface KnownToken {
   tokenSymbol: string;
@@ -58,6 +59,17 @@ export function getTokenName(
   }
 
   return shorten ? `${mintAddress.substring(0, length)}...` : mintAddress;
+}
+
+export function getTokenByName(tokenMap: KnownTokenMap, name: string) {
+  let token: KnownToken | null = null;
+  for (const val of tokenMap.values()) {
+    if (val.tokenSymbol === name) {
+      token = val;
+      break;
+    }
+  }
+  return token;
 }
 
 export function getTokenIcon(
@@ -196,3 +208,7 @@ export const colorWarning = (value = 0, valueCheckpoints = [1, 3, 5, 100]) => {
   }
   return colorCodes[defaultIndex];
 };
+
+export function wadToLamports(amount?: BN): BN {
+  return amount?.div(WAD) || ZERO;
+}

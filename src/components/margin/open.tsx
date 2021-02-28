@@ -30,7 +30,7 @@ import {
 import { AdressesPopover } from "../pool/address";
 import { formatPriceNumber, getPoolName } from "../../utils/utils";
 import { useMint, useUserAccounts } from "../../utils/accounts";
-import { useEnrichedPools } from "../../context/market";
+import { useEnrichedPools } from "../../contexts/market";
 import { PoolIcon } from "../tokenIcon";
 import { AppBar } from "../appBar";
 import { Settings } from "../settings";

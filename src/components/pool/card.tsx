@@ -5,7 +5,7 @@ import { useMint, useUserAccounts } from "../../utils/accounts";
 import { PoolIcon } from "../tokenIcon";
 import { PoolInfo, TokenAccount } from "../../models";
 import "./view.less";
-import { useEnrichedPools } from "../../context/market";
+import { useEnrichedPools } from "../../contexts/market";
 import { formatNumber, formatPct, formatUSD } from "../../utils/utils";
 import { ExplorerLink } from "../explorerLink";
 import { SupplyOverview } from "./supplyOverview";

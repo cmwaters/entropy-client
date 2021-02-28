@@ -26,7 +26,7 @@ import "./close.less";
 import { colorWarning, getTokenName } from "../../utils/utils";
 import { AdressesPopover } from "../pool/address";
 import { PoolInfo } from "../../models";
-import { useEnrichedPools } from "../../context/market";
+import { useEnrichedPools } from "../../contexts/market";
 import { AppBar } from "../appBar";
 import { Settings } from "../settings";
 import { MigrationModal } from "../migration";

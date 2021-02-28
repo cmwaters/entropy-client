@@ -4,8 +4,13 @@ import { TokenSwapLayout, TokenSwapLayoutV1 } from "../models";
 export const WRAPPED_SOL_MINT = new PublicKey(
   "So11111111111111111111111111111111111111112"
 );
-let TOKEN_PROGRAM_ID = new PublicKey(
+
+export const TOKEN_PROGRAM_ID = new PublicKey(
   "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+);
+
+export const LENDING_PROGRAM_ID = new PublicKey(
+  "TokenLending1111111111111111111111111111111"
 );
 
 let SWAP_PROGRAM_ID: PublicKey;

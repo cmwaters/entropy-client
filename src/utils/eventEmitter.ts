@@ -8,6 +8,30 @@ export class AccountUpdateEvent {
   }
 }
 
+export class CacheUpdateEvent {
+  static type = "CacheUpdate";
+  id: string;
+  parser: any;
+  isNew: boolean;
+  constructor(id: string, isNew: boolean, parser: any) {
+    this.id = id;
+    this.parser = parser;
+    this.isNew = isNew;
+  }
+}
+
+export class CacheDeleteEvent {
+  static type = "CacheUpdate";
+  id: string;
+  constructor(id: string) {
+    this.id = id;
+  }
+}
+
+export class CacheClearEvent {
+  static type = "CacheDelete";
+}
+
 export class MarketUpdateEvent {
   static type = "MarketUpdate";
   ids: Set<string>;
@@ -25,6 +49,31 @@ export class EventEmitter {
     return () => this.emitter.removeListener(MarketUpdateEvent.type, callback);
   }
 
+  onCache(callback: (args: CacheUpdateEvent) => void) {
+    this.emitter.on(CacheUpdateEvent.type, callback);
+
+    return () => this.emitter.removeListener(CacheUpdateEvent.type, callback);
+  }
+
+  raiseMarketUpdated(ids: Set<string>) {
+    this.emitter.emit(MarketUpdateEvent.type, new MarketUpdateEvent(ids));
+  }
+
+  raiseCacheUpdated(id: string, isNew: boolean, parser: any) {
+    this.emitter.emit(
+      CacheUpdateEvent.type,
+      new CacheUpdateEvent(id, isNew, parser)
+    );
+  }
+
+  raiseCacheDeleted(id: string) {
+    this.emitter.emit(CacheDeleteEvent.type, new CacheDeleteEvent(id));
+  }
+
+  raiseCacheCleared() {
+    this.emitter.emit(CacheClearEvent.type, new CacheClearEvent());
+  }
+
   onAccount(callback: (args: AccountUpdateEvent) => void) {
     this.emitter.on(AccountUpdateEvent.type, callback);
 
@@ -33,9 +82,5 @@ export class EventEmitter {
 
   raiseAccountUpdated(id: string) {
     this.emitter.emit(AccountUpdateEvent.type, new AccountUpdateEvent(id));
-  }
-
-  raiseMarketUpdated(ids: Set<string>) {
-    this.emitter.emit(MarketUpdateEvent.type, new MarketUpdateEvent(ids));
   }
 }
