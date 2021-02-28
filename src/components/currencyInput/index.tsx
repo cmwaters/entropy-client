@@ -213,7 +213,7 @@ export const CurrencyInput = (props: {
           }}
           placeholder="0.00"
         />
-        <div className="ccy-input-header-right" style={{ display: "felx" }}>
+        <div className="ccy-input-header-right" style={{ display: "flex" }}>
           {!props.hideSelect ? (
             <Select
               size="large"

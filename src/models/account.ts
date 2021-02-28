@@ -7,3 +7,7 @@ export interface TokenAccount {
   account: AccountInfo<Buffer>;
   info: TokenAccountInfo;
 }
+
+export interface MarginAccount {
+  
+}

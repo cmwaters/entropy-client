@@ -12,7 +12,11 @@ export const SWAP_LABEL = "Swap";
 export const CONNECT_LABEL = "Connect Wallet";
 export const SELECT_TOKEN_LABEL = "Select a token";
 export const ENTER_AMOUNT_LABEL = "Enter an amount";
+export const ENTER_COLLATERAL_LABEL = "Enter the amount of collateral";
 export const REMOVE_LIQUIDITY_LABEL = "Remove Liquidity";
+export const SET_LEVERAGE_RATIO = "Choose a Leverage Ratio";
+export const OPEN_POSITION_LABEL = "Open Position";
+export const CLOSE_POSITION_LABEL = "Close Position";
 
 export const generateActionLabel = (
   action: string,
@@ -37,6 +41,30 @@ export const generateActionLabel = (
     : ignoreToBalance || B.sufficientBalance()
     ? action
     : INSUFFICIENT_FUNDS_LABEL(getTokenName(tokenMap, B.mintAddress));
+};
+
+// TODO: We also need to check if there is sufficient reserve
+export const generateOpenPositionLabel = (
+  action: string,
+  connected: boolean,
+  leverage: number,
+  tokenMap: KnownTokenMap,
+  A: CurrencyContextState,
+  B: CurrencyContextState,
+) => {
+  return !connected
+    ? CONNECT_LABEL
+    : !A.mintAddress
+    ? SELECT_TOKEN_LABEL
+    : !A.amount
+    ? ENTER_COLLATERAL_LABEL
+    : leverage <= 1
+    ? SET_LEVERAGE_RATIO
+    : !B.mintAddress
+    ? SELECT_TOKEN_LABEL
+    : !A.sufficientBalance()
+    ? INSUFFICIENT_FUNDS_LABEL(getTokenName(tokenMap, A.mintAddress))
+    : action
 };
 
 export const generateRemoveLabel = (

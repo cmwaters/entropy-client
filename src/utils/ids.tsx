@@ -12,6 +12,8 @@ let SWAP_PROGRAM_ID: PublicKey;
 let SWAP_PROGRAM_LEGACY_IDS: PublicKey[];
 let SWAP_PROGRAM_LAYOUT: any;
 
+let MARGIN_PROGRAM_ID: PublicKey;
+
 export const SWAP_PROGRAM_OWNER_FEE_ADDRESS = new PublicKey(
   "HfoTxFR1Tm6kGmWgYWD6J7YHVy1UwqSULUGVLXkJqaKN"
 );
@@ -91,5 +93,6 @@ export const programIds = () => {
     swap: SWAP_PROGRAM_ID,
     swapLayout: SWAP_PROGRAM_LAYOUT,
     swap_legacy: SWAP_PROGRAM_LEGACY_IDS,
+    margin: MARGIN_PROGRAM_ID,
   };
 };
