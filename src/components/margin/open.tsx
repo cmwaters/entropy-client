@@ -226,9 +226,9 @@ const LeverageButton = (props: {
   value: number,
   onClick: () => void
 }) => {
-  let border = "1px solid #333"
+  let border = "1px solid #999"
   if (props.active) {
-    border = "1px solid #666"
+    border = "1px solid #333"
   }
   return (
     <>

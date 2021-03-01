@@ -21,3 +21,11 @@ export const close = async () => {
 
 }
 
+export interface MarginPosition {
+    mintAddress: string
+    amount: number
+}
+
+export const getMarginPositions = () => {
+
+}
