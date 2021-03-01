@@ -7,14 +7,21 @@ import React, {
 } from "react";
 import { useConnection } from "./connection";
 import { useWallet } from "../utils/wallet";
-import { AccountInfo, Connection, PublicKey } from "@solana/web3.js";
+import { 
+  AccountInfo, 
+  Connection, 
+  PublicKey,
+  ConfirmedSignatureInfo,
+  ConfirmedTransaction,
+ } from "@solana/web3.js";
 import { programIds, SWAP_HOST_FEE_ADDRESS, WRAPPED_SOL_MINT } from "../utils/ids";
 import { AccountLayout, u64, MintInfo, MintLayout } from "@solana/spl-token";
 import { usePools } from "../utils/pools";
 import { TokenAccount, PoolInfo } from "../models";
 import { notify } from "../utils/notifications";
-import { chunks } from "../utils/utils";
+import { chunks, fromLamports } from "../utils/utils";
 import { EventEmitter } from "../utils/eventEmitter";
+import { useMarkets } from "./market"
 
 const AccountsContext = React.createContext<any>(null);
 
@@ -27,6 +34,13 @@ const accountsCache = new Map<string, TokenAccount>();
 
 const pendingCalls = new Map<string, Promise<ParsedAccountBase>>();
 const genericCache = new Map<string, ParsedAccountBase>();
+const transactionCache = new Map<string, ParsedLocalTransaction | null>();
+
+export interface ParsedLocalTransaction {
+  transactionType: number;
+  signature: ConfirmedSignatureInfo;
+  confirmedTx: ConfirmedTransaction | null;
+}
 
 const getAccountInfo = async (connection: Connection, pubKey: PublicKey) => {
   const info = await connection.getAccountInfo(pubKey);
@@ -61,7 +75,7 @@ export interface ParsedAccount<T> extends ParsedAccountBase {
 export type AccountParser = (
   pubkey: PublicKey,
   data: AccountInfo<Buffer>
-) => ParsedAccountBase;
+) => ParsedAccountBase | undefined;
 
 export const MintParser = (pubKey: PublicKey, info: AccountInfo<Buffer>) => {
   const buffer = Buffer.from(info.data);
@@ -101,6 +115,7 @@ export const GenericAccountParser = (
 export const keyToAccountParser = new Map<string, AccountParser>();
 
 export const cache = {
+  emitter: new EventEmitter(),
   query: async (
     connection: Connection,
     pubKey: string | PublicKey,
@@ -136,8 +151,16 @@ export const cache = {
 
     return query;
   },
-  add: (id: PublicKey, obj: AccountInfo<Buffer>, parser?: AccountParser) => {
-    const address = id.toBase58();
+  add: (
+    id: PublicKey | string,
+    obj: AccountInfo<Buffer>,
+    parser?: AccountParser
+  ) => {
+    if (obj.data.length === 0) {
+      return;
+    }
+
+    const address = typeof id === "string" ? id : id?.toBase58();
     const deserialize = parser ? parser : keyToAccountParser.get(address);
     if (!deserialize) {
       throw new Error(
@@ -147,8 +170,15 @@ export const cache = {
 
     cache.registerParser(id, deserialize);
     pendingCalls.delete(address);
-    const account = deserialize(id, obj);
+    const account = deserialize(new PublicKey(address), obj);
+    if (!account) {
+      return;
+    }
+
+    const isNew = !genericCache.has(address);
+
     genericCache.set(address, account);
+    cache.emitter.raiseCacheUpdated(address, isNew, deserialize);
     return account;
   },
   get: (pubKey: string | PublicKey) => {
@@ -161,8 +191,25 @@ export const cache = {
 
     return genericCache.get(key);
   },
-  registerParser: (pubkey: PublicKey, parser: AccountParser) => {
-    keyToAccountParser.set(pubkey.toBase58(), parser);
+
+  byParser: (parser: AccountParser) => {
+    const result: string[] = [];
+    for (const id of keyToAccountParser.keys()) {
+      if (keyToAccountParser.get(id) === parser) {
+        result.push(id);
+      }
+    }
+
+    return result;
+  },
+
+  registerParser: (pubkey: PublicKey | string, parser: AccountParser) => {
+    if (pubkey) {
+      const address = typeof pubkey === "string" ? pubkey : pubkey?.toBase58();
+      keyToAccountParser.set(address, parser);
+    }
+
+    return pubkey;
   },
 
   queryAccount: async (connection: Connection, pubKey: string | PublicKey) => {
@@ -258,6 +305,29 @@ export const cache = {
     const id = pubKey.toBase58();
     mintCache.set(id, mint);
     return mint;
+  },
+  addTransaction: (signature: string, tx: ParsedLocalTransaction | null) => {
+    transactionCache.set(signature, tx);
+    return tx;
+  },
+  addBulkTransactions: (txs: Array<ParsedLocalTransaction>) => {
+    for (const tx of txs) {
+      transactionCache.set(tx.signature.signature, tx);
+    }
+    return txs;
+  },
+  getTransaction: (signature: string) => {
+    const transaction = transactionCache.get(signature);
+    return transaction;
+  },
+  getAllTransactions: () => {
+    return transactionCache;
+  },
+  clear: () => {
+    genericCache.clear();
+    mintCache.clear();
+    transactionCache.clear();
+    cache.emitter.raiseCacheCleared();
   },
 };
 
@@ -732,3 +802,64 @@ const deserializeMint = (data: Buffer) => {
 
   return mintInfo as MintInfo;
 };
+
+export function useUserBalance(
+  mintAddress?: PublicKey | string,
+  account?: PublicKey
+) {
+  const mint = useMemo(
+    () =>
+      typeof mintAddress === "string" ? mintAddress : mintAddress?.toBase58(),
+    [mintAddress]
+  );
+  const { userAccounts } = useUserAccounts();
+  const [balanceInUSD, setBalanceInUSD] = useState(0);
+  const { marketEmitter, midPriceInUSD } = useMarkets();
+
+  const mintInfo = useMint(mint);
+  const accounts = useMemo(() => {
+    return userAccounts
+      .filter(
+        (acc) =>
+          mint === acc.info.mint.toBase58() &&
+          (!account || account.equals(acc.pubkey))
+      )
+      .sort((a, b) => b.info.amount.sub(a.info.amount).toNumber());
+  }, [userAccounts, mint, account]);
+
+  const balanceLamports = useMemo(() => {
+    return accounts.reduce(
+      (res, item) => (res += item.info.amount.toNumber()),
+      0
+    );
+  }, [accounts]);
+
+  const balance = useMemo(() => fromLamports(balanceLamports, mintInfo), [
+    mintInfo,
+    balanceLamports,
+  ]);
+
+  useEffect(() => {
+    const updateBalance = () => {
+      setBalanceInUSD(balance * midPriceInUSD(mint || ""));
+    };
+
+    const dispose = marketEmitter.onMarket((args) => {
+      updateBalance();
+    });
+
+    updateBalance();
+
+    return () => {
+      dispose();
+    };
+  }, [balance, midPriceInUSD, marketEmitter, mint, setBalanceInUSD]);
+
+  return {
+    balance,
+    balanceLamports,
+    balanceInUSD,
+    accounts,
+    hasBalance: accounts.length > 0 && balance > 0,
+  };
+}

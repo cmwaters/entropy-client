@@ -3,6 +3,7 @@ import { MintInfo } from "@solana/spl-token";
 import BN from "bn.js";
 import { PoolInfo, TokenAccount } from "./../models";
 import { WAD, ZERO } from "./math"
+import { PublicKey } from "@solana/web3.js";
 
 export interface KnownToken {
   tokenSymbol: string;
@@ -49,10 +50,14 @@ export function shortenAddress(address: string, chars = 4): string {
 
 export function getTokenName(
   map: KnownTokenMap,
-  mintAddress: string,
+  mintAddress?: string,
   shorten = true,
   length = 5
 ): string {
+  if (!mintAddress) {
+    return "N/A";
+  }
+
   const knownSymbol = map.get(mintAddress)?.tokenSymbol;
   if (knownSymbol) {
     return knownSymbol;
@@ -74,9 +79,15 @@ export function getTokenByName(tokenMap: KnownTokenMap, name: string) {
 
 export function getTokenIcon(
   map: KnownTokenMap,
-  mintAddress: string
+  mintAddress?: string | PublicKey
 ): string | undefined {
-  return map.get(mintAddress)?.icon;
+  const address =
+    typeof mintAddress === "string" ? mintAddress : mintAddress?.toBase58();
+  if (!address) {
+    return;
+  }
+
+  return map.get(address)?.icon;
 }
 
 export function getPoolName(
@@ -211,4 +222,25 @@ export const colorWarning = (value = 0, valueCheckpoints = [1, 3, 5, 100]) => {
 
 export function wadToLamports(amount?: BN): BN {
   return amount?.div(WAD) || ZERO;
+}
+
+export function fromLamports(
+  account?: TokenAccount | number | BN,
+  mint?: MintInfo,
+  rate: number = 1.0
+): number {
+  if (!account) {
+    return 0;
+  }
+
+  const amount = Math.floor(
+    typeof account === "number"
+      ? account
+      : BN.isBN(account)
+        ? account.toNumber()
+        : account.info.amount.toNumber()
+  );
+
+  const precision = Math.pow(10, mint?.decimals || 0);
+  return (amount / precision) * rate;
 }

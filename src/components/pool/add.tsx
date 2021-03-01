@@ -10,7 +10,7 @@ import {
   useConnection,
   useConnectionConfig,
   useSlippageConfig,
-} from "../../context/connection";
+} from "../../contexts/connection";
 import { Spin } from "antd";
 import { LoadingOutlined, SettingOutlined } from "@ant-design/icons";
 import { notify } from "../../utils/notifications";
@@ -19,7 +19,7 @@ import { CurrencyInput } from "../currencyInput";
 import { PoolConfigCard } from "./config";
 import "./add.less";
 import { CurveType, PoolInfo, TokenSwapLayout } from "../../models";
-import { useCurrencyPairState } from "../../context/currencyPair";
+import { useCurrencyPairState } from "../../contexts/currencyPair";
 import {
   CREATE_POOL_LABEL,
   ADD_LIQUIDITY_LABEL,
@@ -28,8 +28,8 @@ import {
 } from "../labels";
 import { AdressesPopover } from "./address";
 import { formatPriceNumber, getPoolName } from "../../utils/utils";
-import { useMint, useUserAccounts } from "../../context/accounts";
-import { useEnrichedPools } from "../../context/market";
+import { useMint, useUserAccounts } from "../../contexts/accounts";
+import { useEnrichedPools } from "../../contexts/market";
 import { PoolIcon } from "../tokenIcon";
 import { AppBar } from "../appBar";
 import { Settings } from "../settings";

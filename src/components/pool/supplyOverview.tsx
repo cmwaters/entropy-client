@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { PoolInfo } from "../../models";
-import { useEnrichedPools } from "../../context/market";
+import { useEnrichedPools } from "../../contexts/market";
 import echarts from "echarts";
 import { formatNumber, formatUSD } from "../../utils/utils";
 

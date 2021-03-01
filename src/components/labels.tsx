@@ -1,4 +1,4 @@
-import { CurrencyContextState } from "../context/currencyPair";
+import { CurrencyContextState } from "../contexts/currencyPair";
 import { getTokenName, KnownTokenMap, getPoolName } from "../utils/utils";
 import { PoolInfo } from "../models";
 

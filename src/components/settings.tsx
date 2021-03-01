@@ -1,8 +1,9 @@
 import React from "react";
 import { Select } from "antd";
-import { ENDPOINTS, useConnectionConfig } from "../context/connection";
+import { ENDPOINTS, useConnectionConfig } from "../contexts/connection";
 import { useWallet, WALLET_PROVIDERS } from "../utils/wallet";
 import { Slippage } from "./slippage";
+import { GithubFilled } from "@ant-design/icons"
 
 export const Settings = () => {
   const { providerUrl, setProvider } = useWallet();
@@ -17,7 +18,7 @@ export const Settings = () => {
           <Slippage />
         </div>
       </div>
-      <div style={{ display: "grid" }}>
+      <div style={{ display: "grid", margin: "20px 0px" }}>
         Network:{" "}
         <Select
           onSelect={setEndpoint}
@@ -31,7 +32,7 @@ export const Settings = () => {
           ))}
         </Select>
       </div>
-      <div style={{ display: "grid" }}>
+      <div style={{ display: "grid", margin: "20px 0px" }}>
         Wallet:{" "}
         <Select onSelect={setProvider} value={providerUrl}>
           {WALLET_PROVIDERS.map(({ name, url }) => (
@@ -42,7 +43,14 @@ export const Settings = () => {
         </Select>
       </div>
       <div>
-
+        <a
+          href={"https://github.com/marbar3778/Entropy"}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GithubFilled />
+          <span style={{marginLeft: "10px"}}>Github</span>
+        </a>
       </div>
     </>
   );

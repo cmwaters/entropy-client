@@ -7,9 +7,9 @@ import {
   useMint,
   useCachedPool,
   useAccountByMint,
-} from "../../context/accounts";
+} from "../../contexts/accounts";
 import "./styles.less";
-import { useConnectionConfig } from "../../context/connection";
+import { useConnectionConfig } from "../../contexts/connection";
 import { PoolIcon, TokenIcon } from "../tokenIcon";
 import { PublicKey } from "@solana/web3.js";
 import { PoolInfo, TokenAccount } from "../../models";

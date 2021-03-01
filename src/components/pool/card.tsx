@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from "react";
 import { Button, Card, Popover, Typography } from "antd";
 import { RemoveLiquidityEntry } from "./remove";
-import { useMint, useUserAccounts } from "../../context/accounts";
+import { useMint, useUserAccounts } from "../../contexts/accounts";
 import { PoolIcon } from "../tokenIcon";
 import { PoolInfo, TokenAccount } from "../../models";
 import "./view.less";
-import { useEnrichedPools } from "../../context/market";
+import { useEnrichedPools } from "../../contexts/market";
 import { formatNumber, formatPct, formatUSD } from "../../utils/utils";
 import { ExplorerLink } from "../explorerLink";
 import { SupplyOverview } from "./supplyOverview";

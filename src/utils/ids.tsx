@@ -9,6 +9,7 @@ export const TOKEN_PROGRAM_ID = new PublicKey(
   "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
 );
 
+// TODO modify this with the modified token lending contract
 export const LENDING_PROGRAM_ID = new PublicKey(
   "TokenLending1111111111111111111111111111111"
 );

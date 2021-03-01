@@ -3,11 +3,11 @@ import React from "react";
 import { ChartsView } from "./components/charts";
 
 import { WalletProvider } from "./utils/wallet";
-import { ConnectionProvider } from "./context/connection";
-import { AccountsProvider } from "./context/accounts";
-import { CurrencyPairProvider } from "./context/currencyPair";
-import { MarketProvider } from "./context/market";
-import { LendingProvider } from "./context/lending"
+import { ConnectionProvider } from "./contexts/connection";
+import { AccountsProvider } from "./contexts/accounts";
+import { CurrencyPairProvider } from "./contexts/currencyPair";
+import { MarketProvider } from "./contexts/market";
+import { LendingProvider } from "./contexts/lending"
 import { PoolOverview } from "./components/pool/view";
 import { ExchangeView } from "./views/exchange";
 import { MarginView } from "./views/margin"

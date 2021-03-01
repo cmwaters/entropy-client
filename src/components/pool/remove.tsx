@@ -3,12 +3,12 @@ import { Button, Card, Col, Radio, Row, Slider, Spin, Typography } from "antd";
 
 import { removeLiquidity, removeExactOneLiquidity } from "../../utils/pools";
 import { useWallet } from "../../utils/wallet";
-import { useConnection, useConnectionConfig } from "../../context/connection";
+import { useConnection, useConnectionConfig } from "../../contexts/connection";
 import { PoolInfo, TokenAccount, TokenSwapLayout } from "../../models";
 import { notify } from "../../utils/notifications";
 import { TokenIcon } from "../tokenIcon";
 import { YourPosition } from "./add";
-import { useMint } from "../../context/accounts";
+import { useMint } from "../../contexts/accounts";
 import {
   formatPriceNumber,
   getPoolName,

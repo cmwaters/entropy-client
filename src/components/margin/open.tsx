@@ -10,7 +10,7 @@ import {
   useConnection,
   useConnectionConfig,
   useSlippageConfig,
-} from "../../context/connection";
+} from "../../contexts/connection";
 import { Spin, Select } from "antd";
 import { notify } from "../../utils/notifications";
 import { SupplyOverview } from "../pool/supplyOverview";
@@ -18,7 +18,7 @@ import { CurrencyInput, TokenDisplay } from "../currencyInput";
 import { PoolConfigCard } from "../pool/config";
 import "./open.less";
 import { CurveType, PoolInfo, TokenSwapLayout } from "../../models";
-import { CurrencyContextState, useCurrencyPairState } from "../../context/currencyPair";
+import { CurrencyContextState, useCurrencyPairState } from "../../contexts/currencyPair";
 import {
   CREATE_POOL_LABEL,
   ADD_LIQUIDITY_LABEL,
@@ -29,8 +29,8 @@ import {
 } from "../labels";
 import { AdressesPopover } from "../pool/address";
 import { formatPriceNumber, getPoolName } from "../../utils/utils";
-import { useMint, useUserAccounts } from "../../context/accounts";
-import { useEnrichedPools } from "../../context/market";
+import { useMint, useUserAccounts } from "../../contexts/accounts";
+import { useEnrichedPools } from "../../contexts/market";
 import { PoolIcon } from "../tokenIcon";
 import { AppBar } from "../appBar";
 import { Settings } from "../settings";
@@ -78,13 +78,8 @@ export const OpenPosition = () => {
         open()
     };
 
-  const hasSufficientBalance = A.sufficientBalance() && B.sufficientBalance();
-  // const getDepositToken = () => {
-  //   if (!depositToken) {
-  //     return undefined;
-  //   }
-  //   return depositToken === A.mintAddress ? A : B;
-  // };
+  const hasSufficientBalance = A.sufficientBalance();
+
   const createPoolButton = pool && (
     <Button
       className="add-button"

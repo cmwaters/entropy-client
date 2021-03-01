@@ -12,14 +12,14 @@ export const LendingView = (props: {}) => {
   const tabList = [
     {
       key: "deposit",
-      tab: <div style={tabStyle}>Trade</div>,
+      tab: <div style={tabStyle}>Deposit</div>,
       render: () => {
         return <DepositReserve />;
       },
     },
     {
       key: "withdraw",
-      tab: <div style={tabStyle}>Pool</div>,
+      tab: <div style={tabStyle}>Withdraw</div>,
       render: () => {
         return <WithdrawReserve />;
       },

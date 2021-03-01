@@ -5,7 +5,7 @@ import {
   SystemProgram,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { sendTransaction, useConnection } from "../context/connection";
+import { sendTransaction, useConnection } from "../contexts/connection";
 import { useEffect, useMemo, useState } from "react";
 import { Token, MintLayout, AccountLayout } from "@solana/spl-token";
 import { notify } from "./notifications";
@@ -15,7 +15,7 @@ import {
   useUserAccounts,
   useCachedPool,
   getMultipleAccounts,
-} from "../context/accounts";
+} from "../contexts/accounts";
 import {
   programIds,
   SWAP_HOST_FEE_ADDRESS,

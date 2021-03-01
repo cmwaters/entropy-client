@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "antd";
-import { useSlippageConfig } from "../../context/connection";
+import { useSlippageConfig } from "../../contexts/connection";
 import { NumericInput } from "./../numericInput";
 
 export const Slippage = () => {

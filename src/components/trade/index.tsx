@@ -4,7 +4,7 @@ import {
   useConnection,
   useConnectionConfig,
   useSlippageConfig,
-} from "../../context/connection";
+} from "../../contexts/connection";
 import { useWallet } from "../../utils/wallet";
 import { CurrencyInput } from "../currencyInput";
 import {
@@ -20,13 +20,13 @@ import {
   LIQUIDITY_PROVIDER_FEE,
 } from "../../utils/pools";
 import { notify } from "../../utils/notifications";
-import { useCurrencyPairState } from "../../context/currencyPair";
+import { useCurrencyPairState } from "../../contexts/currencyPair";
 import { generateActionLabel, POOL_NOT_AVAILABLE, SWAP_LABEL } from "../labels";
 import "./trade.less";
 import { colorWarning, getTokenName } from "../../utils/utils";
 import { AdressesPopover } from "../pool/address";
 import { PoolInfo } from "../../models";
-import { useEnrichedPools } from "../../context/market";
+import { useEnrichedPools } from "../../contexts/market";
 import { AppBar } from "../appBar";
 import { Settings } from "../settings";
 import { MigrationModal } from "../migration";

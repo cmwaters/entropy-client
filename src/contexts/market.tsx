@@ -36,6 +36,7 @@ export interface MarketsContextState {
 
   subscribeToMarket: (mint: string) => () => void;
 
+  precacheMarkets: (mints: string[]) => void;
   dailyVolume: Map<string, RecentPoolData>;
 }
 
@@ -52,6 +53,7 @@ export function MarketProvider({ children = null as any }) {
   const { endpoint } = useConnectionConfig();
   const { pools } = useCachedPool();
   const accountsToObserve = useMemo(() => new Map<string, number>(), []);
+  const [marketMints, setMarketMints] = useState<string[]>([]);
   const [dailyVolume, setDailyVolume] = useState<Map<string, RecentPoolData>>(
     new Map()
   );
@@ -256,6 +258,17 @@ export function MarketProvider({ children = null as any }) {
     [marketByMint, accountsToObserve]
   );
 
+  const precacheMarkets = useCallback(
+    (mints: string[]) => {
+      const newMints = [...new Set([...marketMints, ...mints]).values()];
+
+      if (marketMints.length !== newMints.length) {
+        setMarketMints(newMints);
+      }
+    },
+    [setMarketMints, marketMints]
+  );
+
   return (
     <MarketsContext.Provider
       value={{
@@ -264,13 +277,19 @@ export function MarketProvider({ children = null as any }) {
         accountsToObserve,
         marketByMint,
         subscribeToMarket,
-        dailyVolume: dailyVolume,
+        precacheMarkets,
+        dailyVolume,
       }}
     >
       {children}
     </MarketsContext.Provider>
   );
 }
+
+export const usePrecacheMarket = () => {
+  const context = useMarkets();
+  return context.precacheMarkets;
+};
 
 export const useMarkets = () => {
   const context = useContext(MarketsContext);

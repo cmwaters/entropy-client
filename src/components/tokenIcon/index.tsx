@@ -1,10 +1,11 @@
 import { Identicon } from "./../identicon";
 import React from "react";
 import { getTokenIcon } from "../../utils/utils";
-import { useConnectionConfig } from "../../context/connection";
+import { useConnectionConfig } from "../../contexts/connection";
+import { PublicKey } from "@solana/web3.js";
 
 export const TokenIcon = (props: {
-  mintAddress: string;
+  mintAddress: string | PublicKey;
   style?: React.CSSProperties;
   className?: string;
 }) => {
@@ -16,7 +17,7 @@ export const TokenIcon = (props: {
       <img
         alt="Token icon"
         className={props.className}
-        key={props.mintAddress}
+        key={icon}
         width="20"
         height="20"
         src={icon}
