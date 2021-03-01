@@ -1,41 +1,41 @@
 import React from "react";
 import { Button, Card, Popover } from "antd";
-import { TradeEntry } from "./trade";
-import { AddToLiquidity } from "./pool/add";
-import { Settings } from "./settings";
+import { DepositReserve } from "../components/lending/deposit"
+import { WithdrawReserve } from "../components/lending/withdraw"
+import { Settings } from "../components/settings";
 import { SettingOutlined } from "@ant-design/icons";
-import { AppBar } from "./appBar";
+import { AppBar } from "../components/appBar";
 import { useHistory, useLocation } from "react-router-dom";
 
-export const ExchangeView = (props: {}) => {
+export const LendingView = (props: {}) => {
   const tabStyle: React.CSSProperties = { width: 120 };
   const tabList = [
     {
-      key: "trade",
+      key: "deposit",
       tab: <div style={tabStyle}>Trade</div>,
       render: () => {
-        return <TradeEntry />;
+        return <DepositReserve />;
       },
     },
     {
-      key: "pool",
+      key: "withdraw",
       tab: <div style={tabStyle}>Pool</div>,
       render: () => {
-        return <AddToLiquidity />;
+        return <WithdrawReserve />;
       },
     },
   ];
 
   const location = useLocation();
   const history = useHistory();
-  const activeTab = location.pathname.indexOf("add") < 0 ? "trade" : "pool";
+  const activeTab = location.pathname.indexOf("withdraw") < 0 ? "deposit" : "withdraw";
 
   const handleTabChange = (key: any) => {
     if (activeTab !== key) {
-      if (key === "trade") {
-        history.push("/");
+      if (key === "deposit") {
+        history.push("/lend/deposit");
       } else {
-        history.push("/add");
+        history.push("/lend/withdraw");
       }
     }
   };

@@ -6,15 +6,15 @@ import React, {
   useState,
 } from "react";
 import { useConnection } from "./connection";
-import { useWallet } from "./wallet";
+import { useWallet } from "../utils/wallet";
 import { AccountInfo, Connection, PublicKey } from "@solana/web3.js";
-import { programIds, SWAP_HOST_FEE_ADDRESS, WRAPPED_SOL_MINT } from "./ids";
+import { programIds, SWAP_HOST_FEE_ADDRESS, WRAPPED_SOL_MINT } from "../utils/ids";
 import { AccountLayout, u64, MintInfo, MintLayout } from "@solana/spl-token";
-import { usePools } from "./pools";
-import { TokenAccount, PoolInfo } from "./../models";
-import { notify } from "./notifications";
-import { chunks } from "./utils";
-import { EventEmitter } from "./eventEmitter";
+import { usePools } from "../utils/pools";
+import { TokenAccount, PoolInfo } from "../models";
+import { notify } from "../utils/notifications";
+import { chunks } from "../utils/utils";
+import { EventEmitter } from "../utils/eventEmitter";
 
 const AccountsContext = React.createContext<any>(null);
 
@@ -62,6 +62,7 @@ export type AccountParser = (
   pubkey: PublicKey,
   data: AccountInfo<Buffer>
 ) => ParsedAccountBase;
+
 export const MintParser = (pubKey: PublicKey, info: AccountInfo<Buffer>) => {
   const buffer = Buffer.from(info.data);
 

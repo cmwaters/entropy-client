@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, Card, Popover } from "antd";
-import { OpenPosition } from "./margin/open";
-import { ClosePosition } from "./margin/close";
-import { Settings } from "./settings";
+import { OpenPosition } from "../components/margin/open";
+import { ClosePosition } from "../components/margin/close";
+import { Settings } from "../components/settings";
 import { SettingOutlined } from "@ant-design/icons";
-import { AppBar } from "./appBar";
+import { AppBar } from "../components/appBar";
 import { useHistory, useLocation } from "react-router-dom";
 
 export const MarginView = (props: {}) => {
@@ -28,14 +28,14 @@ export const MarginView = (props: {}) => {
 
     const location = useLocation();
     const history = useHistory();
-    const activeTab = location.pathname.indexOf("margin") < 0 ? "close" : "open";
+    const activeTab = location.pathname.indexOf("open") < 0 ? "close" : "open";
 
     const handleTabChange = (key: any) => {
         if (activeTab !== key) {
             if (key === "open") {
-                history.push("/margin");
+                history.push("/margin/open");
             } else {
-                history.push("/close");
+                history.push("/margin/close");
             }
         }
     };

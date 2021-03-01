@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useConnection, useSlippageConfig } from "../../utils/connection";
+import { useConnection, useSlippageConfig } from "../../context/connection";
 import { Button, Modal } from "antd";
-import { cache, useCachedPool } from "../../utils/accounts";
+import { cache, useCachedPool } from "../../context/accounts";
 import {
   addLiquidity,
   removeLiquidity,

@@ -22,7 +22,7 @@ import {
 import { notify } from "../../utils/notifications";
 import { useCurrencyPairState } from "../../context/currencyPair";
 import { generateActionLabel, POOL_NOT_AVAILABLE, SWAP_LABEL } from "../labels";
-import "./trade.less";
+import "./withdraw.less";
 import { colorWarning, getTokenName } from "../../utils/utils";
 import { AdressesPopover } from "../pool/address";
 import { PoolInfo } from "../../models";
@@ -35,7 +35,8 @@ const { Text } = Typography;
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-export const TradeEntry = () => {
+// was previously trade.tsx
+export const WithdrawReserve = () => {
   const { wallet, connected } = useWallet();
   const connection = useConnection();
   const [pendingTx, setPendingTx] = useState(false);
@@ -331,7 +332,7 @@ export const TradeView = () => {
         headStyle={{ padding: 0 }}
         bodyStyle={{ position: "relative" }}
       >
-        <TradeEntry />
+        <WithdrawReserve />
       </Card>
       <MigrationModal />
     </>

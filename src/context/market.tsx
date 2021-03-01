@@ -8,14 +8,14 @@ import {
   KnownTokenMap,
   STABLE_COINS,
 } from "../utils/utils";
-import { useConnectionConfig } from "../utils/connection";
+import { useConnectionConfig } from "./connection";
 import {
   cache,
   getMultipleAccounts,
   MintParser,
   ParsedAccountBase,
   useCachedPool,
-} from "../utils/accounts";
+} from "./accounts";
 import { Market, MARKETS, Orderbook, TOKEN_MINTS } from "@project-serum/serum";
 import { AccountInfo, Connection, PublicKey } from "@solana/web3.js";
 import { useMemo } from "react";

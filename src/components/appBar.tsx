@@ -14,31 +14,31 @@ export const AppBar = (props: { left?: JSX.Element; right?: JSX.Element }) => {
       <div className="App-Bar-left">
         <div className="App-logo" />
         <Menu mode="horizontal" selectedKeys={[location.pathname]}>
-          <Menu.Item key="/">
+          <Menu.Item key="/swap">
             <Link
               to={{
-                pathname: "/",
+                pathname: "/swap/trade",
               }}
             >
               Swap
             </Link>
           </Menu.Item>
-          <Menu.Item key="/add">
-            <Link
-              to={{
-                pathname: "/add",
-              }}
-            >
-              Pool
-            </Link>
-          </Menu.Item>
           <Menu.Item key="/margin">
             <Link
               to={{
-                pathname: "/margin",
+                pathname: "/margin/open",
               }}
             >
               Margin
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="/lend">
+            <Link
+              to={{
+                pathname: "/lend/deposit",
+              }}
+            >
+              Lend
             </Link>
           </Menu.Item>
           <Menu.Item key="/info">
@@ -56,18 +56,7 @@ export const AppBar = (props: { left?: JSX.Element; right?: JSX.Element }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Trade
-              <sup>↗</sup>
-            </a>
-          </Menu.Item>
-          <Menu.Item key="help">
-            <a
-              href={"https://serum-academy.com/en/serum-swap/"}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Help
-              <sup>↗</sup>
+              DEX
             </a>
           </Menu.Item>
         </Menu>
@@ -79,9 +68,9 @@ export const AppBar = (props: { left?: JSX.Element; right?: JSX.Element }) => {
           <Button
             type="text"
             size="large"
-            onClick={() => history.push({ pathname: "/pool" })}
+            onClick={() => history.push({ pathname: "/overview" })}
           >
-            My Pools
+            Overview
           </Button>
         )}
         <div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Select } from "antd";
-import { ENDPOINTS, useConnectionConfig } from "../utils/connection";
+import { ENDPOINTS, useConnectionConfig } from "../context/connection";
 import { useWallet, WALLET_PROVIDERS } from "../utils/wallet";
 import { Slippage } from "./slippage";
 
@@ -40,6 +40,9 @@ export const Settings = () => {
             </Select.Option>
           ))}
         </Select>
+      </div>
+      <div>
+
       </div>
     </>
   );

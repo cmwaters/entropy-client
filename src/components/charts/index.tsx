@@ -26,7 +26,7 @@ import { PoolIcon } from "../tokenIcon";
 import { Input } from "antd";
 import "./styles.less";
 import echarts from "echarts";
-import { useEnrichedPools } from "../../contexts/market";
+import { useEnrichedPools } from "../../context/market";
 import { usePools } from "../../utils/pools";
 import {
   formatNumber,

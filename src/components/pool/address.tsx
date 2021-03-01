@@ -3,7 +3,7 @@ import { Button, Col, Popover, Row } from "antd";
 import { PoolInfo } from "../../models";
 import { CopyOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { ExplorerLink } from "./../explorerLink";
-import { useConnectionConfig } from "../../utils/connection";
+import { useConnectionConfig } from "../../context/connection";
 import { getTokenName } from "../../utils/utils";
 
 const Address = (props: {

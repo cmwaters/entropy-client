@@ -1,7 +1,7 @@
 import { Identicon } from "./../identicon";
 import React from "react";
 import { getTokenIcon } from "../../utils/utils";
-import { useConnectionConfig } from "../../utils/connection";
+import { useConnectionConfig } from "../../context/connection";
 
 export const TokenIcon = (props: {
   mintAddress: string;

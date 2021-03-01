@@ -9,7 +9,7 @@ import {
   calculateDependentAmount,
   usePoolForBasket,
   PoolOperation,
-} from "./pools";
+} from "../utils/pools";
 import { useMint, useAccountByMint } from "./accounts";
 import { MintInfo } from "@solana/spl-token";
 import { useConnection, useConnectionConfig } from "./connection";
@@ -19,7 +19,7 @@ import {
   TokenAccount,
   DEFAULT_DENOMINATOR,
 } from "../models";
-import { convert, getTokenIcon, getTokenName, KnownToken } from "./utils";
+import { convert, getTokenIcon, getTokenName, KnownToken } from "../utils/utils";
 import { useHistory, useLocation } from "react-router-dom";
 import bs58 from "bs58";
 

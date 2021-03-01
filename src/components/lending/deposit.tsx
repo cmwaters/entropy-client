@@ -16,7 +16,7 @@ import { notify } from "../../utils/notifications";
 import { SupplyOverview } from "../pool/supplyOverview";
 import { CurrencyInput, TokenDisplay } from "../currencyInput";
 import { PoolConfigCard } from "../pool/config";
-import "./open.less";
+import "./deposit.less";
 import { CurveType, PoolInfo, TokenSwapLayout } from "../../models";
 import { CurrencyContextState, useCurrencyPairState } from "../../context/currencyPair";
 import {
@@ -49,7 +49,7 @@ const { Option } = Select
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 // was previously add.tsx
-export const OpenPosition = () => {
+export const DepositReserve = () => {
   const { wallet, connected } = useWallet();
   const connection = useConnection();
   const [pendingTx, setPendingTx] = useState(false);

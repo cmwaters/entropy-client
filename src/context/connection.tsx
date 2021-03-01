@@ -1,4 +1,4 @@
-import { KnownToken, useLocalStorageState } from "./utils";
+import { KnownToken, useLocalStorageState } from "../utils/utils";
 import {
   Account,
   clusterApiUrl,
@@ -7,8 +7,8 @@ import {
   TransactionInstruction,
 } from "@solana/web3.js";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { setProgramIds } from "./ids";
-import { notify } from "./notifications";
+import { setProgramIds } from "../utils/ids";
+import { notify } from "../utils/notifications";
 import { ExplorerLink } from "../components/explorerLink";
 
 export type ENV = "mainnet-beta" | "testnet" | "devnet" | "localnet";
