@@ -199,10 +199,12 @@ const LeverageRatio = (props: {
 
   return (
     <>
-      <div className="leverageContainer">
+      <Card
+        style={{width: '100%', borderRadius: "20px"}}
+      >
         Leverage Ratio
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
-          { props.possibleLeverages.map((leverage) => {
+          {props.possibleLeverages.map((leverage) => {
             return (
               <LeverageButton
                 active={props.currentLeverage === leverage}
@@ -214,7 +216,7 @@ const LeverageRatio = (props: {
             )
           })}
         </div>
-      </div>
+      </Card>
     </>
   );
 }
